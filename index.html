@@ -173,9 +173,12 @@
 <nav>
   <div class="nav-logo"><img src="DCPAS Logo.webp" alt="DCPAS"/></div>
   <div class="nav-links">
+    <a href="#features" onclick="smoothScroll('features')">Features</a>
+    <a href="#how" onclick="smoothScroll('how')">How it Works</a>
+    <a href="#tech" onclick="smoothScroll('tech')">Tech Stack</a>
     <a href="about.html">About</a>
     <a href="contact.html" class="nav-contact">Contact</a>
-  </div>
+</div>
 </nav>
 
 <!-- HERO -->
@@ -313,6 +316,14 @@
 </footer>
 
 <script>
+  function smoothScroll(id) {
+    event.preventDefault();
+    const el = document.getElementById(id);
+    const navHeight = 68; // matches your navbar height
+    const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+  
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
