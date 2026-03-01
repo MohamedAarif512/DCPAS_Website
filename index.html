@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DCPAS – Distributed Crop Protection & Alert System</title>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@800;900&family=K2D:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080c0c;
+      --nav: #0e1010;
+      --green: #00e87a;
+      --green-dark: #00b85f;
+      --card: #0d1414;
+      --border: #1a2828;
+      --text: #e2ece8;
+      --muted: #5a7a70;
+      --muted2: #8aada0;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'K2D', sans-serif; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: var(--nav); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px; height: 68px;
+    }
+    .nav-logo img { height: 46px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a {
+      font-family: 'K2D', sans-serif; font-weight: 500; font-size: 14px;
+      color: var(--muted2); text-decoration: none;
+      padding: 8px 18px; border-radius: 8px;
+      transition: color .2s, background .2s;
+    }
+    .nav-links a:hover { color: var(--text); background: #142020; }
+    .nav-contact {
+      background: var(--green) !important; color: #040a06 !important;
+      font-weight: 700 !important; padding: 9px 22px !important;
+      border-radius: 8px !important; box-shadow: 0 0 18px rgba(0,232,122,.35);
+      transition: background .2s, box-shadow .2s !important;
+    }
+    .nav-contact:hover { background: var(--green-dark) !important; box-shadow: 0 0 28px rgba(0,232,122,.5) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 110px 24px 80px; position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 500px;
+      background: radial-gradient(ellipse at 50% 30%, rgba(0,232,122,.11) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid #1a3828; background: rgba(0,232,122,.06);
+      color: var(--green); font-size: 12px; font-weight: 600;
+      padding: 6px 18px; border-radius: 99px; margin-bottom: 36px;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    h1 {
+      font-family: 'League Spartan', sans-serif; font-weight: 800;
+      font-size: clamp(48px, 8vw, 86px); line-height: .97;
+      color: #fff; max-width: 880px; margin: 0 auto 28px; letter-spacing: -1px;
+    }
+    h1 .accent { color: var(--green); }
+    .hero-sub { max-width: 580px; margin: 0 auto 56px; color: var(--muted2); font-size: 16px; line-height: 1.75; }
+    .stats { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; }
+    .stat { text-align: center; padding: 0 44px; }
+    .stat + .stat { border-left: 1px solid var(--border); }
+    .stat-val { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 38px; color: #fff; line-height: 1; }
+    .stat-val.g { color: var(--green); }
+    .stat-lbl { font-size: 13px; color: var(--muted); margin-top: 6px; font-weight: 500; }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: var(--border); }
+
+    /* SECTIONS */
+    section { padding: 100px 24px; text-align: center; }
+    .section-label {
+      display: inline-block; border: 1px solid #1a3828; background: rgba(0,232,122,.05);
+      color: var(--green); font-size: 11px; font-weight: 700;
+      padding: 6px 16px; border-radius: 99px; margin-bottom: 24px;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+    h2 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: clamp(30px, 5vw, 50px); color: #fff; margin-bottom: 16px; letter-spacing: -.5px; }
+    .sec-sub { max-width: 540px; margin: 0 auto 60px; color: var(--muted2); font-size: 15px; line-height: 1.7; }
+
+    /* FEATURE GRID */
+    #features { background: #080c0c; }
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; max-width: 980px; margin: 0 auto; }
+    @media(max-width:760px){ .feat-grid { grid-template-columns: 1fr; } }
+    .feat-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 28px 24px; text-align: left; cursor: default;
+      transition: border-color .25s, transform .2s, box-shadow .25s;
+    }
+    .feat-card:hover { border-color: #264a38; transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+    .feat-icon {
+      width: 46px; height: 46px; border-radius: 11px;
+      background: rgba(0,232,122,.08); border: 1px solid #1a3828;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+    }
+    .feat-icon svg { width: 22px; height: 22px; stroke: var(--green); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .feat-card h3 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 17px; color: #fff; margin-bottom: 10px; }
+    .feat-card p { font-size: 13.5px; color: var(--muted2); line-height: 1.65; }
+
+    /* HOW IT WORKS */
+    #how { background: #060a0a; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .steps { display: flex; gap: 0; justify-content: center; flex-wrap: wrap; max-width: 900px; margin: 0 auto; }
+    .step { flex: 1; min-width: 220px; text-align: center; padding: 0 32px; position: relative; }
+    .step + .step::before { content: ''; position: absolute; left: 0; top: 36px; width: 1px; height: 60px; background: var(--border); }
+    .step-ico {
+      width: 72px; height: 72px; border-radius: 18px; background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 22px; box-shadow: 0 0 30px rgba(0,232,122,.25);
+    }
+    .step-ico svg { width: 32px; height: 32px; stroke: #040a06; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .step-num { font-size: 11px; color: var(--green); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+    .step h3 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 20px; color: #fff; margin-bottom: 14px; }
+    .step p { font-size: 13.5px; color: var(--muted2); line-height: 1.7; }
+
+    /* TECH STACK */
+    #tech { background: #080c0c; }
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; max-width: 840px; margin: 0 auto; }
+    .tech-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 24px 28px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+      min-width: 170px; flex: 1; max-width: 195px;
+      transition: border-color .2s, transform .2s;
+    }
+    .tech-card:hover { border-color: #264a38; transform: translateY(-3px); }
+    .tech-card svg { width: 26px; height: 26px; stroke: var(--green); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .tech-card h4 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 15px; color: #fff; }
+    .tech-card span { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+    /* CTA */
+    #cta { background: #060a0a; border-top: 1px solid var(--border); }
+    .demo-btn {
+      display: inline-block; margin-top: 40px;
+      background: var(--green); color: #040a06;
+      font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 18px;
+      padding: 18px 48px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 0 40px rgba(0,232,122,.4);
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .demo-btn:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(0,232,122,.55); background: var(--green-dark); }
+    .cta-feats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 32px; }
+    .cta-feat { display: flex; align-items: center; gap: 8px; color: var(--muted2); font-size: 14px; font-weight: 500; }
+    .cta-feat svg { width: 17px; height: 17px; stroke: var(--green); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* FOOTER */
+    footer { background: var(--nav); border-top: 1px solid var(--border); text-align: center; padding: 30px 24px; }
+    footer p { font-size: 13px; color: var(--muted); }
+    footer span { color: var(--green); }
+
+    /* ANIMATION */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><img src="logo.webp" alt="DCPAS"/></div>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="contact.html" class="nav-contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="badge"><span class="badge-dot"></span>Made for HBT'26</div>
+  <h1>Distributed Crop<br/><span class="accent">Protection</span> &amp; Alert System</h1>
+  <p class="hero-sub">An AI-powered smart defense system that detects and deters wild boars from farmland using ESP-32 microcontrollers, buzzers, and automated water sprays — protecting crops 24/7.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-val">24/7</div><div class="stat-lbl">Monitoring</div></div>
+    <div class="stat"><div class="stat-val g">&lt;4s</div><div class="stat-lbl">Detection</div></div>
+    <div class="stat"><div class="stat-val g">&lt;10s</div><div class="stat-lbl">Alert</div></div>
+    <div class="stat"><div class="stat-val">100%</div><div class="stat-lbl">Non-Lethal</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-label">Core Features</div>
+  <h2>Multi-Layered Farm Defense</h2>
+  <p class="sec-sub">A distributed network of smart nodes that detect, deter, and alert — working together to keep your crops safe.</p>
+  <div class="feat-grid">
+    <div class="feat-card fade-up">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/></svg></div>
+      <h3>Wild Boar Detection</h3>
+      <p>Camera detects wild boar movement in real-time across the farm perimeter.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></div>
+      <h3>Buzzer Deterrent</h3>
+      <p>Buzzers emit sound patterns which scare away wild boars without harming them.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>
+      <h3>Water Spray System</h3>
+      <p>Automated water sprayers activate on detection, creating a physical barrier.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+      <h3>ESP-32 Powered</h3>
+      <p>Built on ESP-32 microcontrollers for reliable, low powered distributed processing.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></svg></div>
+      <h3>Wireless Network</h3>
+      <p>Nodes communicate wirelessly to coordinate response and share detection alerts.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+      <h3>Instant Alerts</h3>
+      <p>Farmers receive real-time notifications on their phones when intrusion is detected.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">System Flow</div>
+  <h2>How DCPAS Works</h2>
+  <p class="sec-sub">Three coordinated steps keep your farm protected around the clock.</p>
+  <div class="steps">
+    <div class="step fade-up">
+      <div class="step-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <div class="step-num">Step 1</div>
+      <h3>Detect</h3>
+      <p>PIR motion sensors and ultrasonic detectors identify wild boar activity at the farm perimeter. The ESP-32 processes sensor data in real-time.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+      <div class="step-num">Step 2</div>
+      <h3>Deter</h3>
+      <p>Upon detection, the system activates multi-layered deterrents — loud buzzers emit alarming frequencies while water sprays create a physical barrier.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-ico"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+      <div class="step-num">Step 3</div>
+      <h3>Alert</h3>
+      <p>The distributed nodes communicate wirelessly and push instant notifications to the farmer's phone, logging every intrusion event for review.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TECH STACK -->
+<section id="tech">
+  <div class="section-label">Hardware</div>
+  <h2>Tech Stack</h2>
+  <p class="sec-sub">Built with proven, reliable hardware components for maximum field performance.</p>
+  <div class="tech-grid">
+    <div class="tech-card fade-up">
+      <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+      <h4>ESP-32</h4><span>Dual-core microcontroller</span>
+    </div>
+    <div class="tech-card fade-up">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/></svg>
+      <h4>Camera</h4><span>Motion detection</span>
+    </div>
+    <div class="tech-card fade-up">
+      <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      <h4>Buzzer Module</h4><span>Sound deterrent</span>
+    </div>
+    <div class="tech-card fade-up">
+      <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+      <h4>Water Pump</h4><span>Spray system</span>
+    </div>
+    <div class="tech-card fade-up">
+      <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></svg>
+      <h4>Wi-Fi Mesh</h4><span>Real-time updates</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="section-label">Get Started</div>
+  <h2>Ready to Protect Your Farm?</h2>
+  <p class="sec-sub">Get a free personalized demonstration and see how DCPAS can safeguard your crops from wild boar intrusions.</p>
+  <a href="demo.html" class="demo-btn">Request a Free Demo</a>
+  <div class="cta-feats">
+    <div class="cta-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Free product demonstration</div>
+    <div class="cta-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Custom farm assessment</div>
+    <div class="cta-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Direct support from our team</div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 <span>DCPAS</span>. Distributed Crop Protection &amp; Alert System. Built for HBT'26.</p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 90);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
