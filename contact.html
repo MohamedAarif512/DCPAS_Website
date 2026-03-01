@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact – DCPAS</title>
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="DCPAS Favicon.png"/>
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@800;900&family=K2D:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -21,7 +21,7 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 52px; height: 68px;
     }
-    .nav-logo img { height: 46px; width: auto; object-fit: contain; }
+    .nav-logo img { height: 55px; width: auto; object-fit: contain; }
     .nav-links { display: flex; align-items: center; gap: 6px; }
     .nav-links a {
       font-family: 'K2D', sans-serif; font-weight: 500; font-size: 14px;
@@ -127,7 +127,7 @@
 <body>
 
 <nav>
-  <div class="nav-logo"><img src="logo.webp" alt="DCPAS"/></div>
+  <div class="nav-logo"><img src="DCPAS Logo.webp" alt="DCPAS"/></div>
   <div class="nav-links">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -224,7 +224,39 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  // ── SCROLL ANIMATION ──
+  // Replace these 3 values with your EmailJS credentials
+  // (same account you used for demo.html — just create a new template)
+  const EMAILJS_SERVICE_ID  = 'service_q6x1phg';
+  const EMAILJS_TEMPLATE_ID = 'template_meuyq7o';  // create a separate template for contact
+  const EMAILJS_PUBLIC_KEY  = '_xAx4xDJBvNCgGSq3';
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.submit-btn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name:  this.querySelector('[name="full_name"]').value,
+      from_email: this.querySelector('[name="email"]').value,
+      message:    this.querySelector('[name="message"]').value,
+      to_email:   'mohamedaarif.peer@gmail.com',
+      reply_to:   this.querySelector('[name="email"]').value,
+    }).then(() => {
+      btn.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+      this.reset();
+    }).catch((err) => {
+      console.error('EmailJS error:', err);
+      btn.textContent = 'Send Message';
+      btn.disabled = false;
+      alert('Failed to send. Please try again.');
+    });
+  });
+
+  // Scroll animation
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
@@ -234,52 +266,6 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
-  // ── CONTACT FORM ──
-  // EmailJS setup - replace with your actual keys from emailjs.com
-  // emailjs.init("YOUR_PUBLIC_KEY");
-
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const btn = this.querySelector('.submit-btn');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData.entries());
-
-    // OPTION 1: EmailJS (uncomment and configure)
-    /*
-    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-      from_name: data.full_name,
-      from_email: data.email,
-      message: data.message,
-      to_email: "mohamedaarif.peer@gmail.com"
-    }).then(() => {
-      showSuccess(btn);
-    }).catch(() => {
-      btn.textContent = 'Send Message';
-      btn.disabled = false;
-      alert('Error sending message. Please try again.');
-    });
-    */
-
-    // OPTION 2: Formspree (replace YOUR_FORM_ID after signing up at formspree.io)
-    fetch('https://formspree.io/f/YOUR_FORM_ID', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ name: data.full_name, email: data.email, message: data.message })
-    }).then(r => {
-      if (r.ok) { showSuccess(btn); }
-      else { btn.textContent = 'Send Message'; btn.disabled = false; }
-    }).catch(() => { btn.textContent = 'Send Message'; btn.disabled = false; });
-  });
-
-  function showSuccess(btn) {
-    btn.style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
-    document.getElementById('contactForm').reset();
-  }
 </script>
 </body>
 </html>
