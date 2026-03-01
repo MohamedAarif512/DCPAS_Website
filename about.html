@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About – DCPAS</title>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@800;900&family=K2D:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080c0c; --nav: #0e1010; --green: #00e87a; --green-dark: #00b85f;
+      --card: #0d1414; --border: #1a2828; --text: #e2ece8; --muted: #5a7a70; --muted2: #8aada0;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'K2D', sans-serif; overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: var(--nav); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px; height: 68px;
+    }
+    .nav-logo img { height: 46px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a {
+      font-family: 'K2D', sans-serif; font-weight: 500; font-size: 14px;
+      color: var(--muted2); text-decoration: none;
+      padding: 8px 18px; border-radius: 8px; transition: color .2s, background .2s;
+    }
+    .nav-links a:hover { color: var(--text); background: #142020; }
+    .nav-contact {
+      background: var(--green) !important; color: #040a06 !important;
+      font-weight: 700 !important; padding: 9px 22px !important;
+      border-radius: 8px !important; box-shadow: 0 0 18px rgba(0,232,122,.35);
+    }
+    .nav-contact:hover { background: var(--green-dark) !important; }
+
+    .page-hero {
+      padding: 160px 24px 80px; text-align: center; position: relative;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse at 50% 20%, rgba(0,232,122,.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .section-label {
+      display: inline-block; border: 1px solid #1a3828; background: rgba(0,232,122,.05);
+      color: var(--green); font-size: 11px; font-weight: 700;
+      padding: 6px 16px; border-radius: 99px; margin-bottom: 24px;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+    h1 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: clamp(40px, 6vw, 70px); color: #fff; margin-bottom: 22px; letter-spacing: -1px; }
+    h1 .accent { color: var(--green); }
+    .hero-sub { max-width: 600px; margin: 0 auto; color: var(--muted2); font-size: 16px; line-height: 1.75; }
+
+    .divider { height: 1px; background: var(--border); }
+
+    section { padding: 80px 24px; text-align: center; }
+    h2 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: clamp(28px, 4vw, 44px); color: #fff; margin-bottom: 16px; }
+    .sec-sub { max-width: 560px; margin: 0 auto 50px; color: var(--muted2); font-size: 15px; line-height: 1.7; }
+
+    .mission-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; max-width: 860px; margin: 0 auto; }
+    @media(max-width:640px){ .mission-grid { grid-template-columns: 1fr; } }
+    .mission-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px;
+      text-align: left; transition: border-color .25s, transform .2s;
+    }
+    .mission-card:hover { border-color: #264a38; transform: translateY(-3px); }
+    .mcard-label { font-size: 11px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+    .mission-card h3 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 22px; color: #fff; margin-bottom: 12px; }
+    .mission-card p { font-size: 14px; color: var(--muted2); line-height: 1.7; }
+
+    .team-section { background: #060a0a; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .team-grid { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; max-width: 900px; margin: 0 auto; }
+    .team-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 32px 28px; text-align: center; flex: 1; min-width: 200px; max-width: 240px;
+      transition: border-color .25s, transform .2s;
+    }
+    .team-card:hover { border-color: #264a38; transform: translateY(-3px); }
+    .team-avatar {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: linear-gradient(135deg, #0d2a1a, #1a3828);
+      border: 2px solid #1a3828;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; font-family: 'League Spartan', sans-serif;
+      font-weight: 800; font-size: 22px; color: var(--green);
+    }
+    .team-card h4 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 17px; color: #fff; margin-bottom: 6px; }
+    .team-card span { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; max-width: 860px; margin: 0 auto; }
+    @media(max-width:640px){ .values-grid { grid-template-columns: 1fr; } }
+    .val-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 24px 20px; text-align: center; transition: border-color .2s;
+    }
+    .val-card:hover { border-color: #264a38; }
+    .val-icon { font-size: 28px; margin-bottom: 14px; }
+    .val-card h4 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 16px; color: #fff; margin-bottom: 8px; }
+    .val-card p { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+    .val-icon svg { width: 28px; height: 28px; stroke: var(--green); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .cta-box {
+      background: linear-gradient(135deg, #0a1a10 0%, #060c08 100%);
+      border: 1px solid #1a3828; border-radius: 20px;
+      padding: 60px 40px; max-width: 700px; margin: 0 auto;
+    }
+    .demo-btn {
+      display: inline-block; margin-top: 32px;
+      background: var(--green); color: #040a06;
+      font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 17px;
+      padding: 16px 42px; border-radius: 10px; text-decoration: none;
+      box-shadow: 0 0 32px rgba(0,232,122,.35);
+      transition: transform .2s, background .2s;
+    }
+    .demo-btn:hover { transform: translateY(-2px); background: var(--green-dark); }
+
+    footer { background: var(--nav); border-top: 1px solid var(--border); text-align: center; padding: 30px 24px; }
+    footer p { font-size: 13px; color: var(--muted); }
+    footer span { color: var(--green); }
+
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><img src="logo.webp" alt="DCPAS"/></div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="contact.html" class="nav-contact">Contact</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-label">Our Story</div>
+  <h1>Built to Protect<br/><span class="accent">Every Harvest</span></h1>
+  <p class="hero-sub">DCPAS was created out of a real need — to give farmers an intelligent, humane, and affordable way to protect their crops from wild boar invasions.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- MISSION -->
+<section>
+  <div class="section-label">Mission & Vision</div>
+  <h2>Why We Built DCPAS</h2>
+  <p class="sec-sub">Wild boar intrusions cause massive crop losses every year. We set out to build a solution that is smart, sustainable, and 100% non-lethal.</p>
+  <div class="mission-grid">
+    <div class="mission-card fade-up">
+      <div class="mcard-label">The Problem</div>
+      <h3>Farmers Lose Millions to Wild Boars</h3>
+      <p>Wild boar attacks on farmland are a growing global crisis. Traditional deterrents like fences and traps are expensive, ineffective, or inhumane — leaving farmers helpless against recurring crop destruction.</p>
+    </div>
+    <div class="mission-card fade-up">
+      <div class="mcard-label">Our Solution</div>
+      <h3>Intelligent, Distributed Defense</h3>
+      <p>DCPAS deploys a mesh network of ESP-32 powered smart nodes across your farm perimeter. Each node detects, deters, and alerts — working together automatically, 24 hours a day, 7 days a week.</p>
+    </div>
+    <div class="mission-card fade-up">
+      <div class="mcard-label">Our Mission</div>
+      <h3>Technology That Works for Farmers</h3>
+      <p>We believe every farmer deserves access to cutting-edge protection technology. DCPAS is designed to be affordable, easy to install, and reliable in the toughest field conditions.</p>
+    </div>
+    <div class="mission-card fade-up">
+      <div class="mcard-label">Our Vision</div>
+      <h3>Farms Protected, Wildlife Respected</h3>
+      <p>We're committed to building solutions that protect livelihoods without harming wildlife. Every component of DCPAS is designed to deter, not hurt — because humans and nature can coexist.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAM -->
+<section class="team-section">
+  <div class="section-label">The Team</div>
+  <h2>Built by Passionate Engineers</h2>
+  <p class="sec-sub">A dedicated team of students and engineers who turned a real-world problem into a working solution for HBT'26.</p>
+  <div class="team-grid">
+    <div class="team-card fade-up">
+      <div class="team-avatar">M</div>
+      <h4>Mohamed Aarif</h4>
+      <span>Lead Developer</span>
+    </div>
+    <div class="team-card fade-up">
+      <div class="team-avatar">D</div>
+      <h4>DCPAS Team</h4>
+      <span>Hardware & Systems</span>
+    </div>
+    <div class="team-card fade-up">
+      <div class="team-avatar">A</div>
+      <h4>AI Division</h4>
+      <span>Detection AI</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VALUES -->
+<section>
+  <div class="section-label">Our Values</div>
+  <h2>What Drives Us</h2>
+  <p class="sec-sub">Every decision we make is guided by our core principles.</p>
+  <div class="values-grid">
+    <div class="val-card fade-up">
+      <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h4>Farm Protection First</h4>
+      <p>Every feature exists to keep crops and livelihoods safe.</p>
+    </div>
+    <div class="val-card fade-up">
+      <div class="val-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <h4>100% Non-Lethal</h4>
+      <p>Humane deterrence that respects all living creatures.</p>
+    </div>
+    <div class="val-card fade-up">
+      <div class="val-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <h4>Real-Time Reliability</h4>
+      <p>Sub-second response times, all day and all night.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section>
+  <div class="cta-box fade-up">
+    <div class="section-label">Get Started</div>
+    <h2>See DCPAS in Action</h2>
+    <p style="color:var(--muted2);font-size:15px;line-height:1.7;margin-top:12px;">Request a free demo and let our team walk you through a custom farm protection assessment.</p>
+    <a href="demo.html" class="demo-btn">Request a Free Demo</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 <span>DCPAS</span>. Distributed Crop Protection &amp; Alert System. Built for HBT'26.</p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 90);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
