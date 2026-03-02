@@ -118,9 +118,24 @@
     }
     .demo-btn:hover { transform: translateY(-2px); background: var(--green-dark); }
 
-    footer { background: var(--nav); border-top: 1px solid var(--border); text-align: center; padding: 30px 24px; }
-    footer p { font-size: 13px; color: var(--muted); }
-    footer span { color: var(--green); }
+    footer { background: var(--nav); border-top: 1px solid var(--border); padding: 60px 40px 30px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; max-width: 1100px; margin: 0 auto 48px; }
+@media(max-width:900px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:560px){ .footer-grid { grid-template-columns: 1fr; } }
+.footer-brand img { height: 38px; margin-bottom: 16px; }
+.footer-brand p { font-size: 13.5px; color: var(--muted2); line-height: 1.75; max-width: 280px; margin-bottom: 24px; }
+.social-links { display: flex; gap: 10px; }
+.social-btn { width: 38px; height: 38px; border-radius: 9px; background: var(--card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: border-color .2s, background .2s; cursor: default; }
+.social-btn:hover { border-color: var(--green); background: rgba(0,232,122,.08); }
+.social-btn svg { width: 17px; height: 17px; stroke: var(--muted2); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: stroke .2s; }
+.social-btn:hover svg { stroke: var(--green); }
+.footer-col h5 { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 13px; color: #fff; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 18px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a { font-size: 13.5px; color: var(--muted2); text-decoration: none; transition: color .2s; cursor: pointer; }
+.footer-col ul li a:hover { color: var(--green); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; max-width: 1100px; margin: 0 auto; }
+.footer-bottom p { font-size: 12.5px; color: var(--muted); }
+.footer-bottom span { color: var(--green); }
 
     .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
@@ -238,7 +253,50 @@
 </section>
 
 <footer>
-  <p>&copy; 2026 <span>DCPAS</span>. Distributed Crop Protection &amp; Alert System. Built for HBT'26.</p>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="DCPAS Logo.webp"/>
+      <p>An AI-powered smart defense system that detects and deters wild boars from farmland using ESP-32 microcontrollers, buzzers, and automated water sprays — protecting crops 24/7.</p>
+      <div class="social-links">
+        <div class="social-btn"><svg viewBox="0 0 24 24"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></div>
+        <div class="social-btn"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        <div class="social-btn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+        <div class="social-btn"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Pages</h5>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="demo.html">Request Demo</a></li>
+        <li><a href="problem-solution.html">Problem &amp; Solution</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how">How it Works</a></li>
+        <li><a href="index.html#tech">Tech Stack</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="index.html#business">Business Case</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="mailto:mohamedaarif.peer@gmail.com">mohamedaarif.peer<br/>@gmail.com</a></li>
+        <li><a href="contact.html">Send a Message</a></li>
+        <li><a href="demo.html">Book a Demo</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 <span>DCPAS</span>. Distributed Crop Protection &amp; Alert System. Built for HBT'26.</p>
+    <p>Made with <span>♥</span> for farmers everywhere.</p>
+  </div>
 </footer>
 
 <script>
